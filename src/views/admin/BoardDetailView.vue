@@ -216,7 +216,7 @@ const loading = ref(true)
 const masterData = ref<BoardMaster | null>(null)
 const boardSaving = ref(false)
 const boardForm = reactive<Partial<BoardMaster>>({
-  masterCode, title: '', boardType: 'Board', section: 'main', icon: '', description: '', sortNo: 1, isActive: true
+  masterCode, title: '', boardType: 'Normal', section: 'main', icon: '', description: '', sortNo: 1, isActive: true
 })
 
 // Categories
