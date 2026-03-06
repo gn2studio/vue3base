@@ -3,11 +3,11 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 export default defineConfig({
-    plugins: [
-        vue(),
-        basicSsl(), // HTTPS 자체서명 인증서 (개발 환경용)
-    ],
+    plugins: [vue(), // HTTPS 자체서명 인증서 (개발 환경용)
+    basicSsl(), cloudflare()],
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -23,6 +23,3 @@ export default defineConfig({
         },
     },
 })
-
-
-
