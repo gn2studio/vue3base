@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Silent Renew</title>
+</head>
+
+<body>
+    <!--
+      Silent Renew 전용 페이지 (oidc-client-ts)
+      이 페이지는 signinSilent() 호출 시 hidden iframe에서 로드됩니다.
+      Vue SPA나 Vite 번들에 의존하지 않고 독립적으로 동작해야 합니다.
+    -->
+    <script type="module">
+        import { UserManager, WebStorageStateStore } from 'https://cdn.jsdelivr.net/npm/oidc-client-ts@3.4.1/dist/browser/oidc-client-ts.mjs';
+
+        const localStore = new WebStorageStateStore({ store: window.localStorage });
+
+        // authority/client_id 없이 stateStore만 일치시키면 signinSilentCallback 동작
+        const mgr = new UserManager({
+            authority: '',
+            client_id: '',
+            redirect_uri: '',
+            userStore: localStore,
+            stateStore: localStore,
+        });
+
+        try {
+            await mgr.signinSilentCallback();
+        } catch (e) {
+            console.error('[silent-renew] callback 처리 실패:', e);
+        }
+    </script>
+</body>
+
+</html>

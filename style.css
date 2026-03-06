@@ -1,22 +1,31 @@
+/* Tailwind v4 - CSS-first approach */
+@import "tailwindcss";
+
+/* Explicitly source all Vue/TS files for responsive variant generation */
+@source "../src/**/*.vue";
+@source "../src/**/*.ts";
+
+
 /* Zero-Dep CSS4 Architecture */
 :root {
     --bg-color: oklch(15% 0.05 250);
     --text-primary: oklch(95% 0.01 250);
     --text-secondary: oklch(80% 0.05 250);
     --text-muted: oklch(65% 0.02 250);
-    --accent: oklch(75% 0.15 200); /* Cyan/Blue vibe */
+    --accent: oklch(75% 0.15 200);
+    /* Cyan/Blue vibe */
     --accent-glow: oklch(75% 0.15 200 / 0.5);
-    
+
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.08);
     --glass-hover: rgba(255, 255, 255, 0.06);
-    
+
     --space-sm: 0.5rem;
     --space-md: 1rem;
     --space-lg: 2rem;
     --space-xl: 4rem;
     --space-xxl: 8rem;
-    
+
     --radius-md: 12px;
     --radius-lg: 24px;
 }
@@ -25,7 +34,8 @@
     box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -45,7 +55,8 @@ body, html {
     width: 100%;
     height: 100%;
     z-index: -1;
-    pointer-events: none; /* Let clicks pass through to components */
+    pointer-events: none;
+    /* Let clicks pass through to components */
 }
 
 /* Application Wrapper */
@@ -57,17 +68,29 @@ body, html {
     min-height: 100vh;
 }
 
-/* Main Content Area */
+/* Main Content Area - Layout managed by App.vue via Tailwind */
 main {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xxl);
-    padding: var(--space-xl) var(--space-lg);
-    max-width: 1200px;
-    margin: 0 auto;
     width: 100%;
 }
+
+/* ── Global Page Container: max 1440px centered ── */
+.page-container {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .page-container {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+}
+
 
 /* Glassmorphism Utilities */
 .glass-panel {
@@ -99,7 +122,10 @@ main {
 }
 
 /* Typography Overrides */
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     margin: 0 0 var(--space-md) 0;
     line-height: 1.2;
     font-weight: 700;
@@ -155,6 +181,7 @@ a:hover {
     border-color: var(--accent);
     color: var(--accent);
 }
+
 .btn.primary:hover {
     background: var(--accent);
     color: #000;
@@ -162,9 +189,401 @@ a:hover {
 }
 
 /* Utilities */
-.text-center { text-align: center; }
+.text-center {
+    text-align: center;
+}
+
 .text-gradient {
     background: linear-gradient(135deg, var(--accent) 0%, #fff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+/* ── Admin Dashboard Utilities ───────────────────────────────── */
+
+/* Card */
+.admin-card {
+    background: oklch(16% 0.04 250);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+/* Table */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.admin-table td {
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.65);
+    vertical-align: middle;
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tr:hover td {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-table .text-right {
+    text-align: right;
+}
+
+.admin-table .text-muted {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.empty-row {
+    text-align: center;
+    padding: 2.5rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Buttons */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.5rem 1.1rem;
+    background: oklch(55% 0.18 250);
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    background: oklch(62% 0.2 250);
+    box-shadow: 0 0 20px oklch(55% 0.18 250 / 0.4);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    font-size: 0.875rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+}
+
+.btn-ghost {
+    padding: 0.5rem 1rem;
+    background: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.875rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-ghost:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    color: white;
+}
+
+.btn-danger {
+    padding: 0.5rem 1rem;
+    background: rgba(239, 68, 68, 0.15);
+    color: rgb(248, 113, 113);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.btn-danger:hover {
+    background: rgba(239, 68, 68, 0.25);
+}
+
+.btn-sm {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.78rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.btn-blue {
+    background: rgba(59, 130, 246, 0.12);
+    color: rgb(96, 165, 250);
+}
+
+.btn-yellow {
+    background: rgba(234, 179, 8, 0.12);
+    color: rgb(250, 204, 21);
+}
+
+.btn-red {
+    background: rgba(239, 68, 68, 0.12);
+    color: rgb(248, 113, 113);
+}
+
+.btn-blue:hover {
+    background: rgba(59, 130, 246, 0.25);
+}
+
+.btn-yellow:hover {
+    background: rgba(234, 179, 8, 0.25);
+}
+
+.btn-red:hover {
+    background: rgba(239, 68, 68, 0.25);
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.badge-green {
+    background: rgba(34, 197, 94, 0.12);
+    color: rgb(74, 222, 128);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.badge-gray {
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.badge-blue {
+    background: rgba(59, 130, 246, 0.12);
+    color: rgb(96, 165, 250);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Code Tag */
+.code-tag {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: monospace;
+}
+
+/* Form */
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-row label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.form-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 0.55rem 0.875rem;
+    color: white;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+.form-input:focus {
+    border-color: oklch(55% 0.18 250);
+}
+
+.form-input:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.form-input option {
+    background: oklch(18% 0.05 250);
+}
+
+.form-check {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.check-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875rem;
+}
+
+.form-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: oklch(55% 0.18 250);
+}
+
+.required {
+    color: rgb(248, 113, 113);
+}
+
+/* Modal */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.modal-box {
+    background: oklch(17% 0.05 250);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+}
+
+.modal-sm {
+    max-width: 380px;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-header h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.modal-close:hover {
+    color: white;
+}
+
+.modal-body {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+/* Skeleton */
+.skeleton-row {
+    height: 48px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    animation: skeletonPulse 1.5s infinite;
+}
+
+@keyframes skeletonPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* Transition */
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+    transition: opacity 0.2s ease;
+}
+
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+    opacity: 0;
 }
